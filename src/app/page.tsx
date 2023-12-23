@@ -1,17 +1,16 @@
-import cookies from "../../public/cookies.json"
+import {get_recipes} from "@/cookie_utils";
 
 function CookieRecipe({recipe}) {
     return (<div className="bg-blue-100 basis-1/3-gap-4 min-w-[400px] min-h-72 flex items-center flex-col justify-center">
         <img className={"p-8 w-[300px] h-[300px]"} src={recipe.image_name ?? ""} alt={""} />
-        <a target="_blank" className="p-8 font-bold text-2xl text-center" href={recipe.source}>{recipe.recipe_name}</a>
-        <div className="w-[100%] bg-amber-400 mt-auto text-center font-bold p-2">Show Recipe</div>
+        <a target="_blank" className="p-2 pl-8 pr-8 font-bold text-2xl text-center" href={recipe.source}>{recipe.recipe_name}</a>
+        <div className="mb-10 text-gray-500">By: {recipe.source_name}</div>
+        <div className="mt-auto w-[100%] bg-amber-400 mt-auto text-center font-bold p-2"><a href={`/cookies/${recipe.source_name}/${recipe.recipe_name}`}>More Details</a></div>
     </div>);
 }
 
 export default function Home() {
-
-  console.log(cookies);
-
+    let cookies = get_recipes();
   return (
       <>
 
@@ -34,12 +33,12 @@ export default function Home() {
 
               <div className="cookie-container flex flex-wrap gap-4">
 
-                  {cookies.recipes.map((recipe, index) => {
+                  {cookies.map((recipe, index) => {
                       return <CookieRecipe key={`cookie-recipe-${index}`} recipe={recipe}/>
                   })}
               </div>
           </main>
-          <footer className="ml-auto w-[100%] flex bg-gray-200 place-content-center pt-1 pb-1 pr-2">
+          <footer className="ml-auto w-[100%] flex bg-gray-100 place-content-center pt-1 pb-1 pr-2">
               <a href="mailto:noahreppert95@gmail.com"><span className="font-bold">Email:</span> noahreppert95@gmail.com</a>
           </footer>
       </>
