@@ -88,9 +88,9 @@ export default function Page({params}: { params: { slug: string } }) {
                     <table className="table-auto w-[100%]">
                         <thead>
                             <tr>
-                                <th className="border-b-2 border-black">Ingredient Name:</th>
-                                <th className="border-b-2 border-black">Amount</th>
-                                <th className="border-b-2 border-black min-w-1">Bakers %</th>
+                                <th className="border-b-2 border-black text-left">Ingredient Name</th>
+                                <th className="border-b-2 border-black text-left">Amount</th>
+                                <th className="border-b-2 border-black min-w-1 text-left">Bakers %</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -120,10 +120,6 @@ export default function Page({params}: { params: { slug: string } }) {
                     </table>
                 </div>
             </main>
-            <footer className="ml-auto w-[100%] flex bg-gray-100 place-content-center pt-1 pb-1 pr-2">
-                <a href="mailto:noahreppert95@gmail.com"><span
-                    className="font-bold">Email:</span> noahreppert95@gmail.com</a>
-            </footer>
         </>
     )
 }
