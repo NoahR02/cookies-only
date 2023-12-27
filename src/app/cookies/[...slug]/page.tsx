@@ -4,23 +4,29 @@ import {get_recipes, Recipe, RecipeMetrics} from "@/cookie_utils"
 interface TableProps {
     label: string,
     amount: number | undefined,
-    measurement?: string
+    measurement?: string,
+    metrics: RecipeMetrics | undefined,
 }
 
-const TableRow = ({label, amount, measurement = "g"}: TableProps) => {
+const TableRow = ({label, amount, measurement = "g", metrics}: TableProps) => {
     if((typeof(amount) == "number" && amount == 0) || !amount) {
         return null;
     }
 
     return(
-    <tr>
-        <td>
-            {label}
-        </td>
-        <td>
-            {amount}{measurement}
-        </td>
-    </tr>
+        <tr>
+            <td>
+                {label}
+            </td>
+            <td>
+                {amount}{measurement}
+            </td>
+            { metrics && !(["minutes", "℉"].includes(measurement.trim()))  ?
+            <td>
+                { ((amount / metrics.total_flour) * 100).toFixed(2)}%
+            </td>
+            : null }
+        </tr>
     );
 
 }
@@ -46,33 +52,6 @@ export default function Page({params}: { params: { slug: string } }) {
     if(!recipe) {
         notFound();
     }
-    let cake_flour = recipe.cake_flour ?? 0;
-    let bread_flour = recipe.bread_flour ?? 0;
-    let all_purpose_flour = recipe.all_purpose_flour ?? 0;
-    let light_brown_sugar = recipe.light_brown_sugar ?? 0;
-    let dark_brown_sugar = recipe.dark_brown_sugar ?? 0;
-    let white_sugar = recipe.white_sugar ?? 0;
-    let baking_soda = recipe.baking_soda ?? 0;
-    let baking_powder = recipe.baking_powder ?? 0;
-    let eggs = recipe.eggs ?? 0;
-    let egg_yolks = recipe.egg_yolks ?? 0;
-    let milk = recipe.milk ?? 0;
-    let butter = recipe.butter ?? 0;
-    let browned_butter = recipe.brown_butter ?? 0;
-
-    const total_flour = cake_flour + bread_flour + all_purpose_flour;
-    const total_sugar = light_brown_sugar + dark_brown_sugar + white_sugar;
-    const total_leavening = baking_soda + baking_powder;
-    const total_protein = (bread_flour * 0.127) + (all_purpose_flour * 0.117) + (cake_flour * 0.1) + (eggs * 0.12) + (egg_yolks * 0.15882) + (milk * 0.03333);
-    const total_fat = (butter * 0.8) + (egg_yolks * 0.26471) +  (milk * 0.03333) + (browned_butter * 0.8);
-
-    const recipe_metrics: RecipeMetrics = {
-        total_flour: total_flour,
-        total_sugar: total_sugar,
-        total_leavening: total_leavening,
-        total_protein: total_protein,
-        total_fat: total_fat
-    }
 
     return (
         <>
@@ -94,28 +73,28 @@ export default function Page({params}: { params: { slug: string } }) {
                             </tr>
                         </thead>
                         <tbody>
-                            <TableRow label="Cake Flour" amount={recipe.cake_flour} />
-                            <TableRow label="All Purpose Flour" amount={recipe.all_purpose_flour} />
-                            <TableRow label="Bread Flour" amount={recipe.bread_flour} />
-                            <TableRow label="Baking Soda" amount={recipe.baking_soda} />
-                            <TableRow label="Baking Powder" amount={recipe.baking_powder} />
-                            <TableRow label="Butter" amount={recipe.butter} />
-                            <TableRow label="Brown Butter" amount={recipe.brown_butter} />
-                            <TableRow label="White Sugar" amount={recipe.white_sugar} />
-                            <TableRow label="Light Brown Sugar" amount={recipe.light_brown_sugar} />
-                            <TableRow label="Dark Brown Sugar" amount={recipe.dark_brown_sugar} />
-                            <TableRow label="Eggs" amount={recipe.eggs} />
-                            <TableRow label="Egg Yolks" amount={recipe.egg_yolks} />
-                            <TableRow label="Vanilla Extract" amount={recipe.vanilla_extract} />
-                            <TableRow label={`Salt(${recipe.salt_size})`} amount={recipe.salt} />
-                            <TableRow label="Chocolate" amount={recipe.chocolate} />
-                            <TableRow label="Cookie Size" amount={recipe.cookie_size} />
-                            <TableRow label="Min Bake Time" amount={recipe.min_bake_time} measurement={" minutes"} />
-                            <TableRow label="Max Bake Time" amount={recipe.max_bake_time} measurement={" minutes"} />
-                            <TableRow label="Bake Temp" amount={recipe.bake_temp} measurement={" ℉"} />
-                            <TableRow label="Ice" amount={recipe.ice} />
-                            <TableRow label="Milk" amount={recipe.milk} />
-                            <TableRow label="Corn Starch" amount={recipe.corn_starch} />
+                            <TableRow label="Cake Flour" amount={recipe.cake_flour} metrics={recipe.metrics} />
+                            <TableRow label="All Purpose Flour" amount={recipe.all_purpose_flour} metrics={recipe.metrics} />
+                            <TableRow label="Bread Flour" amount={recipe.bread_flour} metrics={recipe.metrics} />
+                            <TableRow label="Baking Soda" amount={recipe.baking_soda} metrics={recipe.metrics} />
+                            <TableRow label="Baking Powder" amount={recipe.baking_powder} metrics={recipe.metrics} />
+                            <TableRow label="Butter" amount={recipe.butter} metrics={recipe.metrics} />
+                            <TableRow label="Brown Butter" amount={recipe.brown_butter} metrics={recipe.metrics} />
+                            <TableRow label="White Sugar" amount={recipe.white_sugar} metrics={recipe.metrics} />
+                            <TableRow label="Light Brown Sugar" amount={recipe.light_brown_sugar} metrics={recipe.metrics} />
+                            <TableRow label="Dark Brown Sugar" amount={recipe.dark_brown_sugar} metrics={recipe.metrics} />
+                            <TableRow label="Eggs" amount={recipe.eggs} metrics={recipe.metrics} />
+                            <TableRow label="Egg Yolks" amount={recipe.egg_yolks} metrics={recipe.metrics} />
+                            <TableRow label="Vanilla Extract" amount={recipe.vanilla_extract} metrics={recipe.metrics} />
+                            <TableRow label={`Salt(${recipe.salt_size})`} amount={recipe.salt} metrics={recipe.metrics} />
+                            <TableRow label="Chocolate" amount={recipe.chocolate} metrics={recipe.metrics} />
+                            <TableRow label="Cookie Size" amount={recipe.cookie_size} metrics={recipe.metrics} />
+                            <TableRow label="Min Bake Time" amount={recipe.min_bake_time} measurement={" minutes"} metrics={recipe.metrics} />
+                            <TableRow label="Max Bake Time" amount={recipe.max_bake_time} measurement={" minutes"} metrics={recipe.metrics} />
+                            <TableRow label="Bake Temp" amount={recipe.bake_temp} measurement={" ℉"} metrics={recipe.metrics} />
+                            <TableRow label="Ice" amount={recipe.ice} metrics={recipe.metrics} />
+                            <TableRow label="Milk" amount={recipe.milk} metrics={recipe.metrics} />
+                            <TableRow label="Corn Starch" amount={recipe.corn_starch} metrics={recipe.metrics} />
                         </tbody>
                     </table>
                 </div>

@@ -71,12 +71,48 @@ export function get_recipes(): Recipe[] {
         if(!parsed_recipe.corn_starch) {
             parsed_recipe.corn_starch = 0;
         }
+        if(!parsed_recipe.baking_soda) {
+            parsed_recipe.baking_soda = 0;
+        }
+        if(!parsed_recipe.butter) {
+            parsed_recipe.butter = 0;
+        }
+        if(!parsed_recipe.brown_butter) {
+            parsed_recipe.brown_butter = 0;
+        }
+        if(!parsed_recipe.eggs) {
+            parsed_recipe.eggs = 0;
+        }
+        if(!parsed_recipe.egg_yolks) {
+            parsed_recipe.egg_yolks = 0;
+        }
+        if(!parsed_recipe.baking_powder) {
+            parsed_recipe.baking_powder = 0;
+        }
         if(!parsed_recipe.salt) {
             parsed_recipe.salt = 0;
         }
         if(!parsed_recipe.salt_size) {
             parsed_recipe.salt_size = "";
         }
+
+        const {cake_flour, bread_flour, all_purpose_flour, light_brown_sugar, dark_brown_sugar, white_sugar, baking_powder, baking_soda, butter, eggs, egg_yolks, brown_butter, milk } = parsed_recipe;
+
+        const total_flour = cake_flour + bread_flour + all_purpose_flour;
+        const total_sugar = light_brown_sugar + dark_brown_sugar + white_sugar;
+        const total_leavening = baking_soda + baking_powder;
+        const total_protein = (bread_flour * 0.127) + (all_purpose_flour * 0.117) + (cake_flour * 0.1) + (eggs * 0.12) + (egg_yolks * 0.15882) + (milk * 0.03333);
+        const total_fat = (butter * 0.8) + (egg_yolks * 0.26471) +  (milk * 0.03333) + (brown_butter * 0.8);
+
+        const recipe_metrics: RecipeMetrics = {
+            total_flour: total_flour,
+            total_sugar: total_sugar,
+            total_leavening: total_leavening,
+            total_protein: total_protein,
+            total_fat: total_fat
+        }
+
+        parsed_recipe.metrics = recipe_metrics;
 
         recipes.push(parsed_recipe);
     }
