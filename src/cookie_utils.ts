@@ -36,7 +36,13 @@ export interface RecipeMetrics {
     total_sugar: number,
     total_leavening: number,
     total_protein: number,
-    total_fat: number
+    total_fat: number,
+
+    cakey_factor: number,
+    crispy_factor: number,
+    spread_factor: number,
+    nutty_factor: number,
+    chewy_factor: number
 }
 
 export function get_recipes(): Recipe[] {
@@ -104,12 +110,31 @@ export function get_recipes(): Recipe[] {
         const total_protein = (bread_flour * 0.127) + (all_purpose_flour * 0.117) + (cake_flour * 0.1) + (eggs * 0.12) + (egg_yolks * 0.15882) + (milk * 0.03333);
         const total_fat = (butter * 0.8) + (egg_yolks * 0.26471) +  (milk * 0.03333) + (brown_butter * 0.8);
 
+        // Generate some estimates on the characteristics of the cookie.
+        let crispy_factor = 0.5;
+        let cakey_factor = 0.5;
+        let spread_factor = 0.5;
+        let nutty_factor = 0.5;
+        let chewy_factor = 0.5;
+
+        crispy_factor = Math.min(1.0, crispy_factor)
+        cakey_factor = Math.min(1.0, cakey_factor)
+        spread_factor = Math.min(1.0, spread_factor)
+        nutty_factor = Math.min(1.0, nutty_factor)
+        chewy_factor = Math.min(1.0, chewy_factor)
+
         const recipe_metrics: RecipeMetrics = {
-            total_flour: total_flour,
-            total_sugar: total_sugar,
-            total_leavening: total_leavening,
-            total_protein: total_protein,
-            total_fat: total_fat
+            total_flour,
+            total_sugar,
+            total_leavening,
+            total_protein,
+            total_fat,
+
+            crispy_factor,
+            cakey_factor,
+            spread_factor,
+            nutty_factor,
+            chewy_factor
         }
 
         parsed_recipe.metrics = recipe_metrics;

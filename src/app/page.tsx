@@ -1,6 +1,31 @@
-import {get_recipes} from "@/cookie_utils";
+import {get_recipes, RecipeMetrics} from "@/cookie_utils";
 
-function CookieRecipe({recipe}) {
+interface PercentageBarProps {
+    label: string,
+    normal_value: number,
+    color: string,
+}
+function PercentageBar({label, normal_value, color}: PercentageBarProps) {
+    const percentage: string = `${normal_value * 100}`;
+    return <div className="flex items-center w-[100%] gap-2">
+        <label className="w-[100px]">{label}</label>
+        <div className="relative border-[1px] border-gray-300 rounded w-[100%] bg-gray-50 h-[10px]">
+            <span
+                className={`absolute block ml-auto ${color} rounded h-[10px]`} style={{width: `${percentage}%`}}></span>
+        </div>
+    </div>
+}
+
+function CookieRecipe({recipe}: any) {
+    let crispy = recipe.metrics.crispy_factor;
+    let cakey = recipe.metrics.cakey_factor;
+
+    if(recipe.metrics.crispy_factor >= 0.5) {
+        cakey = 1.0 - crispy;
+    } else {
+        cakey = 1.0 - cakey;
+    }
+
     return (
         <div className="bg-blue-100 basis-1/3-gap-4 min-w-[400px] min-h-72 flex items-center flex-col justify-center">
             <img className={"p-8 w-[300px] h-[300px]"} src={recipe.image_name ?? ""} alt={""}/>
@@ -9,19 +34,10 @@ function CookieRecipe({recipe}) {
             <div className="mb-10 text-gray-500">By: {recipe.source_name}</div>
 
             <div className="mb-10 w-[80%] min-w-[300px] max-w-[100%] pl-8 pr-8">
-                <div className="flex items-center w-[100%] gap-10">
-                    <label className="w-[150px]">Sweetness</label>
-                    <div className="relative border-[1px] border-gray-300 rounded w-[100%] bg-gray-50 h-[10px]">
-                        <span className="absolute block ml-auto bg-red-600 rounded w-[50%] h-[10px]"></span>
-                    </div>
-                </div>
-
-                <div className="flex items-center w-[100%] gap-10">
-                    <label className="w-[150px]">Cakey</label>
-                    <div className="relative border-[1px] border-gray-300 rounded w-[100%] bg-gray-50 h-[10px]">
-                        <span className="absolute block ml-auto bg-blue-600 rounded w-[50%] h-[10px]"></span>
-                    </div>
-                </div>
+                <PercentageBar label="Crispy" color="bg-red-600" normal_value={crispy} />
+                <PercentageBar label="Cakey" color="bg-blue-600" normal_value={cakey} />
+                <PercentageBar label="Nutty" color="bg-yellow-600" normal_value={recipe.metrics.nutty_factor} />
+                <PercentageBar label="Chewy" color="bg-green-600" normal_value={recipe.metrics.chewy_factor} />
             </div>
 
             <div className="mt-auto w-[100%] bg-amber-400 mt-auto text-center font-bold p-2"><a
@@ -35,7 +51,7 @@ export default function Home() {
         <>
 
             <main className="flex min-h-screen flex-col items-center justify-between p-24 md:container ml-auto mr-auto">
-
+{/*
               <div className="flex gap-20">
                   <div>
                       <label>Cakiness / Chewiness</label>
@@ -49,7 +65,7 @@ export default function Home() {
                       <label>Richness</label>
                       <input className="accent-red-600" type="range"/>
                   </div>
-              </div>
+              </div>*/}
 
               <div className="cookie-container flex flex-wrap gap-4">
 

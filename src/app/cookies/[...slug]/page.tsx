@@ -40,14 +40,9 @@ export default function Page({params}: { params: { slug: string } }) {
 
     let cookies = get_recipes();
 
-    let recipe: Recipe | undefined;
-    for (let i: number = 0; i < cookies.length; ++i) {
-        let current_recipe = cookies[i];
-        if(current_recipe.recipe_name == recipe_name && current_recipe.source_name == source_name) {
-            recipe = current_recipe;
-            break;
-        }
-    }
+    let recipe: Recipe | undefined = cookies.find((recipe) => {
+        return recipe.recipe_name == recipe_name && recipe.source_name == source_name;
+    });
 
     if(!recipe) {
         notFound();
@@ -55,7 +50,7 @@ export default function Page({params}: { params: { slug: string } }) {
 
     return (
         <>
-            <main className="flex min-h-screen flex-col items-center justify-between p-24 md:container ml-auto mr-auto">
+            <main className="flex min-h-screen flex-col items-center justify-between md:container p-5 ml-auto mr-auto">
                 <div>
                     <div className="header flex flex-col place-items-center">
                         <img className={"p-8 w-[300px] h-[300px]"} src={`/${recipe.image_name}`} alt={""}/>
