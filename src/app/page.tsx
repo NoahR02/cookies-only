@@ -24,7 +24,7 @@ function CookieRecipe({recipe}: any) {
 
     return (
         <div className="bg-blue-100 basis-1/3-gap-4 min-w-[400px] min-h-72 flex items-center flex-col justify-center">
-            <img className={"p-8 w-[300px] h-[300px]"} src={recipe.image_name ?? ""} alt={""}/>
+            <img className={"p-8 w-[300px] h-[300px]"} src={"./" + recipe.image_name ?? ""} alt={""}/>
             <Link target="_blank" className="p-2 pl-8 pr-8 font-bold text-2xl text-center"
                href={recipe.source}>{recipe.recipe_name}</Link>
             <div className="mb-10 text-gray-500">By: {recipe.source_name}</div>
