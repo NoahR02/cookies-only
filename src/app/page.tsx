@@ -20,12 +20,6 @@ function CookieRecipe({recipe}: any) {
     let crispy = recipe.metrics.crispy_factor;
     let cakey = recipe.metrics.cakey_factor;
 
-    if(recipe.metrics.crispy_factor >= 0.5) {
-        cakey = 1.0 - crispy;
-    } else {
-        cakey = 1.0 - cakey;
-    }
-
     return (
         <div className="bg-blue-100 basis-1/3-gap-4 min-w-[400px] min-h-72 flex items-center flex-col justify-center">
             <img className={"p-8 w-[300px] h-[300px]"} src={recipe.image_name ?? ""} alt={""}/>
@@ -51,21 +45,6 @@ export default function Home() {
         <>
 
             <main className="flex min-h-screen flex-col items-center justify-between p-24 md:container ml-auto mr-auto">
-{/*
-              <div className="flex gap-20">
-                  <div>
-                      <label>Cakiness / Chewiness</label>
-                      <input className="accent-red-600" type="range"/>
-                  </div>
-                  <div>
-                      <label>Sweetness</label>
-                      <input className="accent-red-600" type="range"/>
-                  </div>
-                  <div>
-                      <label>Richness</label>
-                      <input className="accent-red-600" type="range"/>
-                  </div>
-              </div>*/}
 
               <div className="cookie-container flex flex-wrap gap-4">
 

@@ -8,6 +8,18 @@ interface TableProps {
     metrics: RecipeMetrics | undefined,
 }
 
+export function generateStaticParams() {
+
+    const recipes = get_recipes();
+    let routes = [];
+
+    for (const recipe of recipes) {
+        routes.push( {slug: [recipe.source_name, recipe.recipe_name]} );
+    }
+
+    return routes;
+}
+
 const TableRow = ({label, amount, measurement = "g", metrics}: TableProps) => {
     if((typeof(amount) == "number" && amount == 0) || !amount) {
         return null;
@@ -31,7 +43,7 @@ const TableRow = ({label, amount, measurement = "g", metrics}: TableProps) => {
 
 }
 
-export default function Page({params}: { params: { slug: string } }) {
+export default function Page({params}: { params: { slug: string[] } }) {
     if (params.slug.length != 2) {
         notFound();
     }
