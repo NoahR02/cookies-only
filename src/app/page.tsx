@@ -1,4 +1,6 @@
 import {get_recipes, RecipeMetrics} from "@/cookie_utils";
+import Link from "next/link"
+import Image from "next/image"
 
 interface PercentageBarProps {
     label: string,
@@ -23,8 +25,8 @@ function CookieRecipe({recipe}: any) {
     return (
         <div className="bg-blue-100 basis-1/3-gap-4 min-w-[400px] min-h-72 flex items-center flex-col justify-center">
             <img className={"p-8 w-[300px] h-[300px]"} src={recipe.image_name ?? ""} alt={""}/>
-            <a target="_blank" className="p-2 pl-8 pr-8 font-bold text-2xl text-center"
-               href={recipe.source}>{recipe.recipe_name}</a>
+            <Link target="_blank" className="p-2 pl-8 pr-8 font-bold text-2xl text-center"
+               href={recipe.source}>{recipe.recipe_name}</Link>
             <div className="mb-10 text-gray-500">By: {recipe.source_name}</div>
 
             <div className="mb-10 w-[80%] min-w-[300px] max-w-[100%] pl-8 pr-8">
@@ -34,8 +36,9 @@ function CookieRecipe({recipe}: any) {
                 <PercentageBar label="Chewy" color="bg-green-600" normal_value={recipe.metrics.chewy_factor} />
             </div>
 
-            <div className="mt-auto w-[100%] bg-amber-400 mt-auto text-center font-bold p-2"><a
-                href={`/cookies/${recipe.source_name}/${recipe.recipe_name}`}>More Details</a></div>
+            <div className="mt-auto w-[100%] bg-amber-400 mt-auto text-center font-bold p-2">
+                <Link href={`/cookies/${recipe.source_name}/${recipe.recipe_name}`}>More Details</Link>
+            </div>
         </div>);
 }
 

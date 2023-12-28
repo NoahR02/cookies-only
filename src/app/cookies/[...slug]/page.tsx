@@ -1,5 +1,7 @@
 import {notFound} from "next/navigation";
 import {get_recipes, Recipe, RecipeMetrics} from "@/cookie_utils"
+import Link from "next/link";
+import Image from "next/image";
 
 interface TableProps {
     label: string,
@@ -65,9 +67,9 @@ export default function Page({params}: { params: { slug: string[] } }) {
             <main className="flex min-h-screen flex-col items-center justify-between md:container p-5 ml-auto mr-auto">
                 <div>
                     <div className="header flex flex-col place-items-center">
-                        <img className={"p-8 w-[300px] h-[300px]"} src={`/${recipe.image_name}`} alt={""}/>
-                        <a target="_blank" className="p-2 pl-8 pr-8 font-bold text-2xl text-center"
-                           href={recipe.source}>{recipe.recipe_name}</a>
+                        <img className={"p-8 w-[300px] h-[300px]"} src={"../../../" + recipe.image_name ?? ""} alt={""}/>
+                        <Link target="_blank" className="p-2 pl-8 pr-8 font-bold text-2xl text-center"
+                           href={`${recipe.source}`}>{recipe.recipe_name}</Link>
                         <div className="mb-10 text-gray-500 text-center">By: {recipe.source_name}</div>
                     </div>
 

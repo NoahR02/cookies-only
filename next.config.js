@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
-    output: 'export',
+    // Export mode breaks links on dev, so only turn on export mode when we are on prod.
+    output: process.env.NODE_ENV === 'development' ? 'standalone' : 'export',
 }
 
 module.exports = nextConfig
