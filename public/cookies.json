@@ -2,7 +2,7 @@
     "recipes": [
         {
             "source": "https://cooking.nytimes.com/recipes/1015819-chocolate-chip-cookies",
-            "image_name": "nyt-single-cookie.png",
+            "image_name": "nyt-single-cookie.webp",
             "source_name": "New York Times",
             "recipe_name": "Chocolate Chip Cookies",
             "cake_flour": 240.971,
@@ -25,7 +25,7 @@
         {
             "source": "https://www.nestle.com/stories/timeless-discovery-toll-house-chocolate-chip-cookie-recipe",
             "source_name": "Nestle",
-            "image_name": "nestle-toll-house-single-cookie.png",
+            "image_name": "nestle-toll-house-single-cookie.webp",
             "recipe_name": "Toll House Crunch Cookie",
             "all_purpose_flour": 281.000,
             "baking_soda": 4.800,
@@ -45,7 +45,7 @@
         {
             "source": "https://www.americastestkitchen.com/recipes/4737-perfect-chocolate-chip-cookies",
             "source_name": "America's Test Kitchen",
-            "image_name": "americas-test-kitchen-single-cookie.png",
+            "image_name": "americas-test-kitchen-single-cookie.webp",
             "recipe_name": "Perfect Chocolate Chip Cookies",
             "all_purpose_flour": 248.000,
             "baking_soda": 2.400,
@@ -67,7 +67,7 @@
         {
             "source": "https://altonbrown.com/recipes/the-chewy-chocolate-chip-cookie/",
             "source_name": "Alton Brown",
-            "image_name": "alton-brown-single-cookie.png",
+            "image_name": "alton-brown-single-cookie.webp",
             "recipe_name": "The Chewy Chocolate Chip Cookie",
             "bread_flour": 340.000,
             "baking_soda": 4.800,
@@ -89,7 +89,7 @@
         {
             "source": "https://www.seriouseats.com/the-food-lab-best-chocolate-chip-cookie-recipe",
             "source_name": "Serious Eats",
-            "image_name": "serious-eats-single-cookie.png",
+            "image_name": "serious-eats-single-cookie.webp",
             "recipe_name": "The Food Lab's Chocolate Chip Cookies Recipe",
             "all_purpose_flour": 280.000,
             "baking_soda": 3.000,
@@ -110,7 +110,7 @@
         {
             "source": "https://www.bonappetit.com/recipe/bas-best-chocolate-chip-cookies",
             "source_name": "Bon Appétit",
-            "image_name": "ba-chocolate-chip-cookie.png",
+            "image_name": "ba-chocolate-chip-cookie.webp",
             "recipe_name": "BA’s Best Chocolate Chip Cookies",
             "all_purpose_flour": 200.000,
             "baking_soda": 4.000,
@@ -131,7 +131,7 @@
         {
             "source": "https://sallysbakingaddiction.com/chewy-chocolate-chip-cookies/",
             "source_name": "Sally's Baking Addiction",
-            "image_name": "sallys-baking-addiction-single-cookie.png",
+            "image_name": "sallys-baking-addiction-single-cookie.webp",
             "recipe_name": "Chewy Chocolate Chip Cookies",
             "all_purpose_flour": 280.000,
             "baking_soda": 4.800,
