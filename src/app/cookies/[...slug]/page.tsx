@@ -67,7 +67,7 @@ export default function Page({params}: { params: { slug: string[] } }) {
             <main className="flex min-h-screen flex-col items-center justify-between md:container p-5 ml-auto mr-auto">
                 <div>
                     <div className="header flex flex-col place-items-center">
-                        <img className={"p-8 w-[300px] h-[300px]"} src={"../../" + recipe.image_name ?? ""} alt={""}/>
+                        <Image width={300} height={300} className={"p-8"} src={"/" + recipe.image_name ?? ""} alt={""}/>
                         <Link target="_blank" className="p-2 pl-8 pr-8 font-bold text-2xl text-center"
                            href={`${recipe.source}`}>{recipe.recipe_name}</Link>
                         <div className="mb-10 text-gray-500 text-center">By: {recipe.source_name}</div>
