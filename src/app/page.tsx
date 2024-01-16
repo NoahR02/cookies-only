@@ -33,7 +33,6 @@ function CookieRecipe({recipe}: any) {
                 <PercentageBar label="Crispy" color="bg-red-600" normal_value={crispy} />
                 <PercentageBar label="Cakey" color="bg-blue-600" normal_value={cakey} />
                 <PercentageBar label="Nutty" color="bg-yellow-600" normal_value={recipe.metrics.nutty_factor} />
-                <PercentageBar label="Chewy" color="bg-green-600" normal_value={recipe.metrics.chewy_factor} />
             </div>
 
             <div className="mt-auto w-[100%] bg-amber-400 mt-auto text-center font-bold p-2">

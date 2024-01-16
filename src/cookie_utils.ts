@@ -42,7 +42,6 @@ export interface RecipeMetrics {
     crispy_factor: number,
     spread_factor: number,
     nutty_factor: number,
-    chewy_factor: number
 }
 
 export function get_recipes(): Recipe[] {
@@ -111,17 +110,62 @@ export function get_recipes(): Recipe[] {
         const total_fat = (butter * 0.8) + (egg_yolks * 0.26471) +  (milk * 0.03333) + (brown_butter * 0.8);
 
         // Generate some estimates on the characteristics of the cookie.
-        let crispy_factor = 0.5;
-        let cakey_factor = 0.5;
-        let spread_factor = 0.5;
-        let nutty_factor = 0.5;
-        let chewy_factor = 0.5;
+        let crispy_factor = 0.0;
+        let cakey_factor = 0.0;
+        let spread_factor = 0.0;
+        let nutty_factor = 0.2;
+
+
+        const total_weight =
+            parsed_recipe.baking_powder +
+            parsed_recipe.baking_soda +
+            total_flour +
+            total_sugar +
+            parsed_recipe.butter +
+            parsed_recipe.brown_butter +
+            parsed_recipe.vanilla_extract +
+            parsed_recipe.ice +
+            parsed_recipe.corn_starch +
+            parsed_recipe.chocolate +
+            parsed_recipe.eggs +
+            parsed_recipe.egg_yolks +
+            parsed_recipe.salt;
+
+        const total_water_weight =
+            total_flour * .14 +
+            parsed_recipe.light_brown_sugar * 0.013 +
+            parsed_recipe.dark_brown_sugar * 0.021 +
+            parsed_recipe.butter * .20 +
+            parsed_recipe.brown_butter * .02 +
+            parsed_recipe.vanilla_extract * .35 +
+            parsed_recipe.ice +
+            parsed_recipe.chocolate * .01 +
+            parsed_recipe.eggs * .73 +
+            parsed_recipe.egg_yolks * .5;
+
+
+        const water_percentage = total_water_weight / total_flour;
+        const water_percentage_string = ((total_water_weight / total_flour) * 100).toFixed(2)
+
+        let corn_starch_factor = parsed_recipe.corn_starch > 0.0 ? 0.3 : 0;
+        let cake_flour_factor = parsed_recipe.cake_flour > 0.0 ? 0.2 : 0.0;
+
+        cakey_factor = (.5 * (water_percentage / .5)) + cake_flour_factor;
+        crispy_factor = (.8 * (water_percentage / .5)) + corn_starch_factor + -cake_flour_factor;
+
+
+
+        if(parsed_recipe.brown_butter > 0.0) {
+            nutty_factor += 0.3
+        }
+        if(parsed_recipe.dark_brown_sugar / total_sugar >= .5) {
+            nutty_factor += 0.3
+        }
 
         crispy_factor = Math.min(1.0, crispy_factor)
         cakey_factor = Math.min(1.0, cakey_factor)
         spread_factor = Math.min(1.0, spread_factor)
         nutty_factor = Math.min(1.0, nutty_factor)
-        chewy_factor = Math.min(1.0, chewy_factor)
 
         const recipe_metrics: RecipeMetrics = {
             total_flour,
@@ -134,7 +178,6 @@ export function get_recipes(): Recipe[] {
             cakey_factor,
             spread_factor,
             nutty_factor,
-            chewy_factor
         }
 
         parsed_recipe.metrics = recipe_metrics;
