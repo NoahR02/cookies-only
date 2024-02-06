@@ -28,7 +28,8 @@ export interface Recipe {
     min_bake_time: number,
     max_bake_time: number,
     bake_temp: number,
-    metrics?: RecipeMetrics
+    metrics?: RecipeMetrics,
+    id: string,
 }
 
 export interface RecipeMetrics {
@@ -37,16 +38,59 @@ export interface RecipeMetrics {
     total_leavening: number,
     total_protein: number,
     total_fat: number,
-
-    cakey_factor: number,
-    crispy_factor: number,
-    spread_factor: number,
-    nutty_factor: number,
 }
 
-export function get_recipes(): Recipe[] {
-    let recipes: Recipe[] = [];
+export function scale_recipe(original_recipe: Recipe, scale: number): Recipe {
+    
+    let recipe = structuredClone(original_recipe);
 
+    recipe.cake_flour *= scale;
+    recipe.all_purpose_flour *= scale;
+    recipe.bread_flour *= scale;
+
+    recipe.baking_soda *= scale;
+    recipe.baking_powder *= scale;
+
+    recipe.ice *= scale;
+    recipe.milk *= scale;
+    recipe.butter *= scale;
+    recipe.brown_butter *= scale;
+    recipe.white_sugar *= scale;
+    recipe.corn_starch *= scale;
+    recipe.light_brown_sugar *= scale;
+    recipe.dark_brown_sugar *= scale;
+    recipe.eggs *= scale;
+    recipe.egg_yolks *= scale;
+    recipe.vanilla_extract *= scale;
+
+    recipe.salt *= scale;
+    recipe.chocolate *= scale;
+
+    const {cake_flour, bread_flour, all_purpose_flour, light_brown_sugar, dark_brown_sugar, white_sugar, baking_powder, baking_soda, butter, eggs, egg_yolks, brown_butter, milk } = recipe;
+
+    const total_flour = cake_flour + bread_flour + all_purpose_flour;
+    const total_sugar = light_brown_sugar + dark_brown_sugar + white_sugar;
+    const total_leavening = baking_soda + baking_powder;
+    const total_protein = (bread_flour * 0.127) + (all_purpose_flour * 0.117) + (cake_flour * 0.1) + (eggs * 0.12) + (egg_yolks * 0.15882) + (milk * 0.03333);
+    const total_fat = (butter * 0.8) + (egg_yolks * 0.26471) +  (milk * 0.03333) + (brown_butter * 0.8);
+
+    const recipe_metrics: RecipeMetrics = {
+        total_flour,
+        total_sugar,
+        total_leavening,
+        total_protein,
+        total_fat
+    }
+
+    recipe.metrics = recipe_metrics;
+
+    return recipe;
+}
+
+export function get_recipes(): Map<string, Recipe> {
+    let recipes: Map<string, Recipe> = new Map();
+
+    let i = 0;
     for(let recipe in cookies.recipes) {
         let parsed_recipe: Recipe = JSON.parse(JSON.stringify(cookies.recipes[recipe]));
         if(!parsed_recipe.ice) {
@@ -173,16 +217,12 @@ export function get_recipes(): Recipe[] {
             total_leavening,
             total_protein,
             total_fat,
-
-            crispy_factor,
-            cakey_factor,
-            spread_factor,
-            nutty_factor,
         }
 
         parsed_recipe.metrics = recipe_metrics;
 
-        recipes.push(parsed_recipe);
+        recipes.set(parsed_recipe.id, parsed_recipe);
+        i += 1;
     }
 
     return recipes;
