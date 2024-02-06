@@ -14,15 +14,5 @@ export default function SiteMap(): MetadataRoute.Sitemap {
         },
     ];
 
-    const recipes = get_recipes();
-    for (const recipe of recipes) {
-        sitemap_urls.push( {
-            url: `${domain}/cookies/${recipe.source_name}/${recipe.recipe_name}`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.9,
-        } );
-    }
-
     return sitemap_urls;
 }
